@@ -1,4 +1,7 @@
-This solution is merge of two solutions presented here in Github. 
+# Running url
+http://54.94.225.6:8080/
+
+This solution is the merge of two solutions presented here in Github. 
 
 The first one is the authentication bit, masterfully presented and explained by scotch.io according the following text
 
@@ -34,6 +37,8 @@ If you would like to download the code and try it for yourself:
 #############################
 
 The following bit was adapted from Ricardo Moya and Ramon Invarato from jarroba.com, the original solution can be found here:
+
+# MEAN_ejemplo
 
 https://github.com/jarroba/MEAN_ejemplo
 
