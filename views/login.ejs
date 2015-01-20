@@ -1,0 +1,77 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="initial-scale=1, maximum-scale=1">
+
+	<title>ACNModa - Cadastro de Confecções</title>
+
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+	<link rel="stylesheet" href="css/style-fundo.css">
+	<style>
+		body 
+		{ 
+			padding-top:80px; 		
+			background: url(images/imagem-signin.jpg) no-repeat center center fixed; 
+			-webkit-background-size: cover;
+			-moz-background-size: cover;
+			-o-background-size: cover;
+			background-size: cover;
+			color: white;  
+		}
+
+		h1{
+			color: white;
+		}
+	</style>
+</head>
+<body>
+<div class="container">
+
+			<div class="row text-center"> 
+
+				<div class="col-sm-offset-3 col-md-6 text-center"> 	
+				    <div class="text-center">
+						<img src="images/logo.png"width="80%">
+				    </div>
+				</div> 	
+ 			</div>
+
+<br>
+<br>
+<br>
+
+	<div class="col-sm-6 col-sm-offset-3">
+
+	    <br>
+
+		<h1><span class="fa fa-sign-in"></span> Acesse sua conta</h1>
+
+		<% if (message.length > 0) { %>
+			<div class="alert alert-danger"><%= message %></div>
+		<% } %>
+
+		<!-- LOGIN FORM -->
+		<form action="/login" method="post">
+			<div class="form-group">
+				<label>Email</label>
+				<input type="text" class="form-control" name="email">
+			</div>
+			<div class="form-group">
+				<label>Senha</label>
+				<input type="password" class="form-control" name="password">
+			</div>
+
+			<button type="submit" class="btn btn-success btn-lg"><span class="fa fa-sign-in"></span> Acesse sua conta</button>
+		</form>
+
+		<hr>
+
+		<p>Não tem uma senha ? <a href="/signup">Registre-se</a></p>
+		<p>Ou volte para a <a href="/">página principal</a>.</p>
+
+	</div>
+</div>
+</body>
+</html>

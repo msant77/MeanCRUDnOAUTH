@@ -1,0 +1,322 @@
+<!doctype html>
+
+<!-- ASSIGN OUR ANGULAR MODULE -->
+<html ng-app="MainApp">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>ACNM Controle de Confecções</title>
+	<!-- Cargamos bootstrap -->
+<!-- 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+ -->
+ 	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/font-awesome.min.css">
+
+
+	<!-- Cargamos angular -->
+	<!-- <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script> 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script> -->
+
+	<script src="js/angular.min.js"></script> 
+    <script src="js/jquery.min.js"></script>
+
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+	
+	<!-- Cargamos el javascript de angular -->
+
+	<script src="core.js"></script>
+	<script src="notAngular.js"></script>
+
+	<style>
+		body
+		{ 
+			padding-top:40px; 		
+			background: url(images/imagem-login.jpg) no-repeat center center fixed; 
+			-webkit-background-size: cover;
+			-moz-background-size: cover;
+			-o-background-size: cover;
+			background-size: cover;
+			/*color: white;*/
+  		}
+  		
+		h1 
+		{
+			color: white;
+		}
+		.jumbotron{
+		    background-color:#004b96;
+		    color:white;
+		}
+		.customer-dialog-table {
+			width: 100%;
+		}
+		.customer-dialog-table-label-td {
+			width: 20%;
+		}
+	</style>
+
+
+
+</head>
+<body ng-controller="mainController">
+	<div class="container" style="width:100%; padding: 0px" >
+
+		<div class="jumbotron text-center" ng-prueba>		
+			<div class="row text-center"> 
+
+				<div class="col-sm-offset-3 col-md-6"> 	
+				    <div class="text-center">
+						<img src="images/logo.png"width="80%">
+				    </div>
+				</div> 	
+
+ 			</div>
+			<br>
+			<div class="text-left">
+				<div class="row">
+					<div  class="col-md-10">
+						<h3>Bem-vindo: <span class="label label-default">{{ user.name }}</span></h3>
+						<h3>Seu email é <span class="label label-info"> {{ user.email }} </span></h3>
+ 						<h3>Nº de Registros: <span class="label label-default">{{ stores.length }}</span></h3>
+					</div>
+					<div class="col-md-2 text-right">
+						<br>
+						<br>
+						<br>
+						<br>
+						<br>
+ 						<a class="btn btn-info btn-lg" href="/logout"><span class="fa fa-sign-out"></span> Sair</a>
+					</div>	
+				</div>
+			</div>
+		</div>
+
+		<div class="row" style="width:100%;">
+			<div class="col-sm-5 text-center" ng-hide="user.isAdmin">
+				<div class="panel panel-default">
+          			<div class="panel-heading"><h4>Cadastre abaixo seus clientes</h4></div>
+          				<div class="panel-body">
+          					<div class="alert alert-info">
+                                 Insira seus dados e clique e salvar. Use o botão TAB em seu teclado para navegar nos campos. 
+                            </div>
+          					
+							<form name="myForm">
+								<!-- Acciones que podemos realizar en el formulario -->
+								<button type="submit" class="btn btn-md" ng-click="clearFields()" >Limpar Campos</button>
+
+								<button type="submit" class="btn btn-danger btn-md" ng-disabled="!newStore.brandName || !newStore.contactName || !newStore.phone1 || !selected" data-toggle="modal" data-target="#modalConfirmDeletion">Deletar</button>
+
+								<div class="form-group">
+									<br>
+									<input type="text" class="form-control input-sm " placeholder="userEmail" ng-hide="true" ng-model="newStore.userEmail">
+									<input type="text" class="form-control input-sm " placeholder="userName" ng-hide="true" ng-model="newStore.userName">
+									<br>
+
+									<div class="input-group">
+									    <span class="input-group-addon">* Empresa</span>
+										<input type="text" class="form-control input-sm" ng-model="newStore.brandName" required>
+									</div>
+									<br>
+									<div class="input-group">
+									    <span class="input-group-addon">* CNPJ</span>
+										<input type="text" onkeypress="return formataCNPJ(event, this, '###.###.###/####-##');" class="form-control input-sm " ng-model="newStore.cgc" ng-cnpj required>
+									</div>	
+
+									<br>
+									<div class="input-group">
+									    <span class="input-group-addon">* Contato</span>
+										<input type="text" class="form-control input-sm " ng-model="newStore.contactName" required>
+									</div>	
+
+									<br>
+
+									<div class="input-group">
+									    <span class="input-group-addon">* Telefone 1</span>
+	 									<input type="text" class="form-control input-sm " onkeypress="return formataFone(event, this, '##-####-####');" ng-model="newStore.phone1" required>
+									</div>	
+	
+									<br>
+
+									<div class="input-group">
+									    <span class="input-group-addon">Celular</span>
+										<input type="text" class="form-control input-sm" onkeypress="return formataCelular(event, this, '##-####-#####');" ng-model="newStore.phone2">
+									</div>	
+									<br>
+
+									<div class="input-group">
+									    <span class="input-group-addon">Telefone 3</span>
+										<input type="text" class="form-control input-sm " onkeypress="return formataFone(event, this, '##-####-####');" ng-model="newStore.phone3">
+									</div>	
+									<br>
+
+									<div class="input-group">
+									    <span class="input-group-addon">* Endereço</span>
+										<input type="text" class="form-control input-sm " ng-model="newStore.address" required>
+									</div>	
+									<br>
+
+									<div class="input-group">
+									    <span class="input-group-addon">* Bairro</span>
+										<input type="text" class="form-control input-sm " ng-model="newStore.district" required>
+									</div>	
+
+									<br>
+
+									<div class="input-group">
+									    <span class="input-group-addon">* CEP</span>
+										<input type="text" class="form-control input-sm" onkeypress="return formataCEP(event, this, '#####-###');" ng-model="newStore.cep" required>
+									</div>	
+									<br>
+
+									<div class="input-group">
+									    <span class="input-group-addon">* E-mail</span>
+										<input type="text" class="form-control input-sm" ng-model="newStore.email" required>
+									</div>	
+									<br>
+
+									<div class="input-group">
+									    <span class="input-group-addon">Website</span>
+										<input type="text" class="form-control input-sm " ng-model="newStore.website">
+									</div>	
+								</div>
+								<button type="submit" class="btn btn-success btn-md" ng-click="addStore()" ng-disabled="myForm.$invalid || selected" ng-hide="selected">Salvar Novo</button>
+								<button type="submit" class="btn btn-warning btn-md" ng-click="changeStore(newStore)" ng-hide="!newStore.cgc || !newStore.brandName || !newStore.contactName || !newStore.phone1 || !selected">Salvar Existente</button>
+
+							</form>
+						</div>
+					</div>	
+			</div>
+			<div class="text-center" ng-class="user.isAdmin ? 'col-sm-12' : 'col-sm-7'">
+				<div class="panel panel-default">
+          			<div class="panel-heading"><h4>Lista de clientes cadastrados</h4></div>
+          				<div class="panel-body">
+
+          					<div class="alert alert-info" ng-hide="user.isAdmin">
+								Aqui você poderá visualizar todos os clientes cadastrados, clique para selecionar um cliente e alterar as informações cadastradas.
+							</div>
+							<table class="table table-striped">
+								<tr class="info text-left">
+									<td><h5><strong>Empresa</strong></h5></td>
+									<td><h5><strong>Contato</strong></h5></td>
+									<td><h5><strong>Telefone</strong></h5></td>
+									<td class="text-left" ng-show="user.isAdmin"><h5><strong>Consultor</strong></h5></td>
+									<td class="text-center" ng-show="user.isAdmin"><span class="fa fa-gear"></span></td>
+								</tr>
+								<tr ng-repeat="store in stores" ng-click="selectStore(store)">
+									<td class="text-left">{{ store.brandName }}</td>
+									<td class="text-left">{{ store.contactName }}</td>
+									<td class="text-left">{{ store.phone1 }}</td>						
+									<td class="text-left" ng-show="user.isAdmin">{{store.userName}}</td>
+									<td class="text-center" ng-show="user.isAdmin"><button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#modalRecordDetails"><span class="fa fa-info"></span></button></td>
+								</tr>
+							</table>					
+						</div>
+					</div>
+			</div>
+
+		</div>
+	</div>
+
+	<div class="modal fade" id="modalRecordDetails" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Fechar</span></button>
+	        <h4 class="modal-title" id="myModalLabel">Dados do cliente</h4>
+	      </div>
+	      <div class="modal-body">
+
+			<div class="panel panel-info">
+      			<div class="panel-heading"><b>Empresa: </b>{{ newStore.brandName }}</div>
+
+				  <div class="panel-body">
+				      <table class="customer-dialog-table" >
+				      	<tr>
+				      		<td class="customer-dialog-table-label-td"><b>Contato</b></td>
+				      		<td>{{ newStore.contactName }} </td>
+				      	</tr>
+				      	<tr>
+				      		<td><b>CNPJ</b></td>
+				      		<td>{{ newStore.cgc }} </td>
+				      	</tr>
+				      	<tr>
+				      		<td><b>Telefone 1</b></td>
+				      		<td>{{ newStore.phone1 }} </td>
+				      	</tr>
+				      	<tr>
+				      		<td><b>Celular</b></td>
+				      		<td>{{ newStore.phone2 }} </td>
+				      	</tr>
+				      	<tr>
+				      		<td><b>Telefone 3</b></td>
+				      		<td>{{ newStore.phone3 }} </td>
+				      	</tr>
+				      	<tr>
+				      		<td><b>Endereço</b></td>
+				      		<td>{{ newStore.address }} </td>
+				      	</tr>
+				      	<tr>
+				      		<td><b>Bairro</b></td>
+				      		<td>{{ newStore.district }} </td>
+				      	</tr>
+				      	<tr>
+				      		<td><b>CEP</b></td>
+				      		<td>{{ newStore.cep }} </td>
+				      	</tr>
+				      	<tr>
+				      		<td><b>E-Mail</b></td>
+				      		<td>{{ newStore.email }} </td>
+				      	</tr>
+				      	<tr>
+				      		<td><b>Website</b></td>
+				      		<td>{{ newStore.website }} </td>
+				      	</tr>
+					</table>
+					<br>
+					<table class="customer-dialog-table">				      	
+				      	<tr>
+				      		<td class="customer-dialog-table-label-td"><b>Consultor</b></td>
+				      		<td>{{ newStore.userName }} </td>
+				      	</tr>
+
+				      </table>
+				  </div>
+				</div>
+			</div>
+
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+	        <!-- <button type="button" class="btn btn-primary" ng-hide="true">Save changes</button> -->
+	      </div>
+	    </div>
+	  </div>
+	</div>	
+
+	<div class="modal fade" id="modalConfirmDeletion" tabindex="-1" role="dialog" aria-labelledby="modalConfirmDeletionLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+	        <h4 class="modal-title" id="myModalLabel"><h4>Confirma exclusão do cliente ?</h4>
+	      </div>
+	      <div class="modal-body">
+
+	      	<!-- <h4>Confirma deleção do seguinte cliente: </h4> -->
+	      	<h3>{{ newStore.brandName }}</h3>
+	      	<br>
+	      	<span style="color: red;"><h5>Essa operação não poderá ser desfeita!</h5></span>
+
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-default" data-dismiss="modal">Não excluir</button>
+	        <button type="button" class="btn btn-danger" ng-click="eraseStore(newStore)" data-dismiss="modal"><span class="fa fa-thrash"></span> Excluir</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>	
+
+</body>
+
+</html>

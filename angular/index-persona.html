@@ -1,0 +1,72 @@
+<!doctype html>
+
+<!-- ASSIGN OUR ANGULAR MODULE -->
+<html ng-app="MainApp">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Ejemplo MEAN</title>
+	<!-- Cargamos bootstrap -->
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+	<!-- Cargamos angular -->
+	<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
+	<!-- Cargamos el javascript de angular -->
+	<script src="core.js"></script>
+
+</head>
+<body ng-controller="mainController">
+	<div class="container">
+
+		<div class="jumbotron text-center" ng-prueba>
+			<h1>Nº de Registros: <span class="label label-success">{{ personas.length }}</span></h1>
+		</div>
+
+		<div class="row">
+			<div class="col-sm-6  text-center">
+				<div class="panel panel-default">
+          			<div class="panel-heading"><h4>Lista de clientes cadastrados</h4></div>
+          				<div class="panel-body">
+							<table class="table table-striped">
+								<tr class="info">
+									<td><h5>CNPJ</h5></td>
+									<td><h5>Razão Social</h5></td>
+									<td><h5>Nome de Fantasia</h5></td>
+									<td><h5>Website</h5></td>
+								</tr>
+								<tr ng-repeat="persona in personas" ng-click="selectPerson(persona)">
+									<td>{{ persona.nombre }}</td>
+									<td>{{ persona.apellido }}</td>
+									<td>{{ persona.edad }}</td>						
+									<td>{{ persona.website }}</td>						
+								</tr>
+							</table>					
+						</div>
+					</div>
+			</div>
+			<div class="col-sm-6 text-center">
+				<div class="panel panel-default">
+          			<div class="panel-heading"><h4>Cadastre abaixo seus clientes</h4></div>
+          				<div class="panel-body">
+							<form name="myForm">
+								<div class="form-group">
+									<input type="text" class="form-control input-lg " placeholder="CNPJ" ng-model="newPersona.nombre" required>
+									<br>
+									<input type="text" class="form-control input-lg " placeholder="Razão Social" ng-model="newPersona.apellido" required>
+									<br>
+									<input type="text" class="form-control input-lg " placeholder="Nome Fantasia" ng-model="newPersona.edad" required>
+									<br>
+									<input type="text" class="form-control input-lg " placeholder="Website" ng-model="newPersona.website" required>
+								</div>
+
+								<!-- Acciones que podemos realizar en el formulario -->
+								<button type="submit" class="btn btn-success btn-lg" ng-click="registrarPersona()" ng-disabled="myForm.$invalid || selected">Cadastrar</button>
+								<button type="submit" class="btn btn-warning btn-lg" ng-click="modificarPersona(newPersona)" ng-disabled="!newPersona.nombre || !newPersona.apellido || !newPersona.edad || !selected">Modificar</button>
+								<button type="submit" class="btn btn-danger btn-lg" ng-click="borrarPersona(newPersona)" ng-disabled="!newPersona.nombre || !newPersona.apellido || !newPersona.edad || !selected">Deletar</button>
+							</form>
+						</div>
+					</div>	
+			</div>
+		</div>
+	</div>
+</body>
+</html>
