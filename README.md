@@ -1,5 +1,5 @@
 # Running url
-http://54.94.225.6:8080/
+http://meancrud.marcosantana.com.br
 
 This solution is the merge of two solutions presented here in Github. 
 
